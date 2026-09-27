@@ -30,6 +30,15 @@ The Vite app runs at `http://localhost:5173` and the Socket.IO server defaults t
 npm run build
 ```
 
+## Deploy
+
+The Vercel configuration in `vercel.json` deploys the Vite frontend. The Socket.IO server runs as a separate Render web service described by `render.yaml`.
+
+1. Create a Render Blueprint from this repository's `main` branch. Set `CLIENT_URL` to the Vercel production URL when prompted.
+2. In Vercel, deploy the repository from its root and set `VITE_API_URL` to the public Render service URL.
+
+The Render blueprint uses the free plan for prototyping. Free services can spin down while idle, and live rooms are held in server memory, so a server restart clears active rooms and scores.
+
 The project also contains a Prisma schema, seed script, and Docker Compose PostgreSQL service for persistence work. To run those tools, copy `apps/server/.env.example` to `apps/server/.env`, start PostgreSQL with `docker compose up -d`, then run `npm run prisma:generate`, `npm run prisma:migrate`, and `npm run prisma:seed`. The current room and player flow does not use the database; rooms and scores disappear when the server restarts.
 
 ## Current limitations
