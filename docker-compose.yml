@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: arcadenet-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: arcadenet
+      POSTGRES_PASSWORD: arcadenet
+      POSTGRES_DB: arcadenet
+    ports:
+      - "5432:5432"
+    volumes:
+      - arcadenet_pgdata:/var/lib/postgresql/data
+volumes:
+  arcadenet_pgdata:

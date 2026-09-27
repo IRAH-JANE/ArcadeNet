@@ -39,3 +39,8 @@ The project also contains a Prisma schema, seed script, and Docker Compose Postg
 - Some games do not yet implement every rule of their real-world counterparts.
 - The Prisma schema and local PostgreSQL setup are not integrated into the live room flow.
 - Production deployment still needs security hardening, persistent matches, matchmaking, and reconnection handling.
+
+
+## Disclaimer
+
+ArcadeNet was created by Irah Jane for school and educational purposes only. This project is intended for learning and demonstration purposes and is not intended for commercial or production use.

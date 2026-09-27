@@ -1,0 +1,14 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+enum MatchStatus { WAITING PLAYING FINISHED ABANDONED }
+enum MatchResult { WIN LOSS DRAW }
+model User { id String @id @default(cuid()) username String @unique email String @unique passwordHash String createdAt DateTime @default(now()) updatedAt DateTime @updatedAt profile Profile? matchPlayers MatchPlayer[] wins Match[] @relation("Winner") }
+model Profile { id String @id @default(cuid()) userId String @unique displayName String bio String? avatar String? level Int @default(1) experience Int @default(0) user User @relation(fields:[userId],references:[id],onDelete:Cascade) }
+model Game { id String @id name String description String category String players Int @default(2) active Boolean @default(true) matches Match[] rooms Room[] }
+model Room { id String @id @default(cuid()) code String @unique gameId String createdAt DateTime @default(now()) game Game @relation(fields:[gameId],references:[id]) matches Match[] }
+model Match { id String @id @default(cuid()) gameId String roomId String? status MatchStatus @default(WAITING) winnerId String? startedAt DateTime? endedAt DateTime? game Game @relation(fields:[gameId],references:[id]) room Room? @relation(fields:[roomId],references:[id]) winner User? @relation("Winner",fields:[winnerId],references:[id]) players MatchPlayer[] }
+model MatchPlayer { id String @id @default(cuid()) matchId String userId String score Int @default(0) result MatchResult? match Match @relation(fields:[matchId],references:[id],onDelete:Cascade) user User @relation(fields:[userId],references:[id],onDelete:Cascade) @@unique([matchId,userId]) }
+model Achievement { id String @id @default(cuid()) code String @unique name String description String users UserAchievement[] }
+model UserAchievement { userId String achievementId String unlockedAt DateTime @default(now()) user User @relation(fields:[userId],references:[id],onDelete:Cascade) achievement Achievement @relation(fields:[achievementId],references:[id],onDelete:Cascade) @@id([userId,achievementId]) }
+model Friendship { id String @id @default(cuid()) requesterId String addresseeId String status String createdAt DateTime @default(now()) @@unique([requesterId,addresseeId]) }
+model Notification { id String @id @default(cuid()) userId String type String payload Json readAt DateTime? createdAt DateTime @default(now()) }
