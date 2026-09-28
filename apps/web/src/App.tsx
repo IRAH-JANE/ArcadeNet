@@ -12,6 +12,7 @@ import {
   Wifi,
   WifiOff,
 } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 import { socket } from "./lib/socket";
 import { useArcadeStore } from "./stores/useArcadeStore";
 import type { RoomSnapshot } from "@arcadenet/shared";
@@ -869,6 +870,7 @@ export default function App() {
         <span>ArcadeNet</span>
         <span>Play fair. Have fun.</span>
       </footer>
+      <Analytics />
     </main>
   );
 }
