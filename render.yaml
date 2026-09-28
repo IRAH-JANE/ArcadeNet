@@ -4,7 +4,8 @@ services:
     runtime: node
     plan: free
     branch: main
-    buildCommand: npm ci && npm run build -w @arcadenet/server
+    # npm ci omits devDependencies when NODE_ENV=production; Nest CLI is needed to compile.
+    buildCommand: npm ci --include=dev && npm run build -w @arcadenet/server
     startCommand: node apps/server/dist/src/main.js
     envVars:
       - key: NODE_ENV
